@@ -1,4 +1,4 @@
-# CurrencyEx – View Exchange Rate Today
+# CurrencyExc – View Exchange Rate Today
 
 A simple and efficient web app that shows exchange rates of different currencies. The app also allows users to convert between currencies using exchange rate data from a public API. It's designed for quick conversions with a clean and responsive user interface.
 
