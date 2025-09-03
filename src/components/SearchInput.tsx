@@ -8,13 +8,13 @@ const SearchInput = ({ className, ...rest }: Props) => {
       <input
         type="text"
         className={twMerge(
-          "peer block w-full rounded-lg border border-neutral-800 bg-neutral-900 p-2.5 ps-10 text-sm text-white placeholder:text-neutral-400 focus:border-neutral-700 focus:ring-neutral-700 focus:placeholder:text-white",
+          "peer block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm focus:border-blue-700 focus:ring-blue-700",
           className
         )}
         {...rest}
       />
 
-      <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3 text-neutral-400 peer-focus:text-white">
+      <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3 text-gray-500 peer-focus:text-blue-700">
         <svg
           fill="none"
           aria-hidden="true"

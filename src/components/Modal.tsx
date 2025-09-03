@@ -1,13 +1,12 @@
-import { useEffect } from "react";
+import { forwardRef, useEffect } from "react";
 
-type Props = React.ComponentPropsWithRef<"div"> & {
+interface Props {
   close: () => void;
-};
+}
 
-const Modal = ({ close, ref }: Props) => {
+const Modal = forwardRef<HTMLDivElement, Props>(({ close }, ref) => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
-
     return () => {
       document.body.style.overflow = "";
     };
@@ -15,19 +14,19 @@ const Modal = ({ close, ref }: Props) => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 z-10 h-full w-full bg-black/40"></div>
+      <div className="fixed top-0 left-0 z-10 h-full w-full bg-black/50"></div>
 
       <div
         ref={ref}
-        className="fixed top-1/2 left-1/2 z-20 w-10/12 -translate-1/2 rounded-lg border border-neutral-800 bg-neutral-900 lg:w-3/5 xl:w-1/2 2xl:w-2/5"
+        className="absolute top-1/2 left-1/2 z-20 w-10/12 -translate-1/2 rounded-md border border-gray-300 bg-white p-3 shadow-lg sm:w-[500px]"
         tabIndex={-1}
       >
-        <div className="flex items-center justify-between border-b border-neutral-800 p-4">
-          <h3 className="text-xl font-semibold text-white">About</h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-xl font-semibold">About</h3>
 
           <button
             type="button"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-white hover:bg-neutral-800"
+            className="inline-flex h-7 w-7 items-center justify-center rounded text-gray-600 hover:bg-gray-100 hover:text-black"
             onClick={close}
           >
             <svg
@@ -49,12 +48,12 @@ const Modal = ({ close, ref }: Props) => {
           </button>
         </div>
 
-        <div className="p-4 text-base text-neutral-400">
+        <div className="mt-2 border-t border-gray-300 pt-3 text-gray-600">
           <p>
-            A simple and efficient web app that shows exchange rates of
-            different currencies. The app also allows users to convert between
-            currencies using exchange rate data from a public API. It's designed
-            for quick conversions with a clean and responsive user interface.
+            CurrencyExc is a web app that shows exchange rates of different
+            currencies and allows users to convert between currencies using
+            exchange rate data from a public API. It's designed for quick
+            conversions with a clean and responsive user interface.
           </p>
 
           <p className="mt-3">
@@ -63,13 +62,13 @@ const Modal = ({ close, ref }: Props) => {
             which often include additional fees or variations.
           </p>
 
-          <p className="mt-4 text-center">
-            - {new Date().getFullYear()} CurrencyExc
+          <p className="mt-2 text-center">
+            - CurrencyExc, {new Date().getFullYear()}.
           </p>
         </div>
       </div>
     </>
   );
-};
+});
 
 export default Modal;

@@ -1,6 +1,6 @@
 # CurrencyExc – View Exchange Rates Today
 
-A simple and efficient web app that shows exchange rates of different currencies. The app also allows users to convert between currencies using exchange rate data from a public API. It's designed for quick conversions with a clean and responsive user interface.
+CurrencyExc is a web app that shows exchange rates of different currencies and allows users to convert between currencies using exchange rate data from a public API. It's designed for quick conversions with a clean and responsive user interface.
 
 The backend service integrates with the [Free Currency Exchange Rates API](https://github.com/fawazahmed0/exchange-api) to provide fast and reliable exchange rate data.
 

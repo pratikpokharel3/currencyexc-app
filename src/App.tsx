@@ -76,6 +76,12 @@ function App() {
       item.name.toLowerCase().includes(currencyName)
     );
 
+    if (filtered.length === 0) {
+      setFilteredData([]);
+      setSearchCurrency(currencyName);
+      return;
+    }
+
     setSearchCurrency(currencyName);
     setFilteredData(filtered);
   }
@@ -95,14 +101,14 @@ function App() {
           <main className="container mx-auto px-4 py-10">
             <div
               className={twMerge(
-                "rounded-lg border-2 border-neutral-800 p-5",
+                "rounded-lg border border-gray-300 bg-white p-5 shadow-lg",
                 isRefeshing && "pointer-events-none opacity-70"
               )}
             >
               <div className="grid grid-cols-12 items-start">
                 <div className="col-span-12 lg:col-span-7">
                   <div className="flex items-center gap-x-4">
-                    <div className="text-white">Base Currency</div>
+                    <div>Base Currency</div>
 
                     <div>
                       <Select
@@ -119,7 +125,7 @@ function App() {
                     </div>
                   </div>
 
-                  <div className="mt-2.5 text-neutral-400">
+                  <div className="mt-1 text-gray-500">
                     Showing exchange rates with {baseCurrency.toUpperCase()} as
                     base currency
                   </div>
@@ -134,7 +140,7 @@ function App() {
                   </div>
                 </div>
 
-                <div className="col-span-12 mt-3 rounded-lg border border-neutral-800 p-3 lg:col-span-5 lg:mt-0">
+                <div className="col-span-12 mt-3 rounded-lg border border-gray-300 p-3 lg:col-span-5 lg:mt-0">
                   <CurrencyConverter currencies={currencyList} />
                 </div>
 

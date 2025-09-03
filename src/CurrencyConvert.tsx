@@ -10,8 +10,7 @@ interface Props {
   currencies: Currency[];
 }
 
-let rate1 = 1;
-let rate2 = 1;
+let exRate = 1;
 
 const CurrencyConverter = ({ currencies }: Props) => {
   const [selectedCurrencyOne, setSelectedCurrencyOne] = useState("USD");
@@ -24,10 +23,9 @@ const CurrencyConverter = ({ currencies }: Props) => {
   }, []);
 
   async function getExchangeRates() {
-    rate1 = await getCurrencyRate("usd", "npr");
-    rate2 = await getCurrencyRate("npr", "usd");
+    exRate = await getCurrencyRate("usd", "npr");
 
-    setExchangeAmountTwo(rate1);
+    setExchangeAmountTwo(exRate);
   }
 
   async function getCurrencyRate(currency1: string, currency2: string) {
@@ -44,44 +42,46 @@ const CurrencyConverter = ({ currencies }: Props) => {
     try {
       if (type === "one") {
         const rate = await getCurrencyRate(
-          selectedCurrencyTwo.toLowerCase(),
-          currencyCode.toLowerCase()
+          currencyCode.toLowerCase(),
+          selectedCurrencyTwo.toLowerCase()
         );
 
-        rate2 = rate;
+        exRate = rate;
 
+        const newAmount = exchangeAmountTwo / rate;
+
+        setExchangeAmountOne(parseFloat(newAmount.toFixed(4)));
         setSelectedCurrencyOne(currencyCode);
-
-        convertCurrencyOne(exchangeAmountTwo);
 
         return;
       }
 
       const rate = await getCurrencyRate(
-        selectedCurrencyOne.toLowerCase(),
-        currencyCode.toLowerCase()
+        currencyCode.toLowerCase(),
+        selectedCurrencyOne.toLowerCase()
       );
 
-      rate1 = rate;
+      exRate = rate;
 
+      const newAmount = exchangeAmountOne / rate;
+
+      setExchangeAmountTwo(parseFloat(newAmount.toFixed(4)));
       setSelectedCurrencyTwo(currencyCode);
-
-      convertCurrencyTwo(exchangeAmountOne);
     } catch (e) {}
   }
 
-  function convertCurrencyTwo(rate: number) {
-    const newRate = rate1 * rate;
+  function convertCurrencyOneTwo(amount: number) {
+    const newValue = amount * exRate;
 
-    setExchangeAmountOne(rate);
-    setExchangeAmountTwo(parseFloat(newRate.toFixed(4)));
+    setExchangeAmountOne(amount);
+    setExchangeAmountTwo(parseFloat(newValue.toFixed(4)));
   }
 
-  function convertCurrencyOne(rate: number) {
-    const newRate = rate2 * rate;
+  function convertCurrencyTwoOne(amount: number) {
+    const newValue = amount / exRate;
 
-    setExchangeAmountTwo(rate);
-    setExchangeAmountOne(parseFloat(newRate.toFixed(4)));
+    setExchangeAmountTwo(amount);
+    setExchangeAmountOne(parseFloat(newValue.toFixed(4)));
   }
 
   return (
@@ -102,10 +102,9 @@ const CurrencyConverter = ({ currencies }: Props) => {
           min="0"
           type="number"
           value={exchangeAmountOne}
-          onChange={(e) => convertCurrencyTwo(e.target.valueAsNumber)}
+          onChange={(e) => convertCurrencyOneTwo(e.target.valueAsNumber)}
         />
       </div>
-
       <div className="mt-2 flex gap-x-2">
         <Select
           value={selectedCurrencyTwo}
@@ -122,7 +121,7 @@ const CurrencyConverter = ({ currencies }: Props) => {
           min="0"
           type="number"
           value={exchangeAmountTwo}
-          onChange={(e) => convertCurrencyOne(e.target.valueAsNumber)}
+          onChange={(e) => convertCurrencyTwoOne(e.target.valueAsNumber)}
         />
       </div>
     </>
